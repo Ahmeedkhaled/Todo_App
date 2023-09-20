@@ -1,4 +1,10 @@
 {
 "settings": "Settings",
-  "list": "List"
+  "list": "List",
+  "dark": "Dark",
+  "light": "Light",
+  "english": "English",
+  "arabic": "Arabic",
+  "language": "Language",
+  "theme": "Theme"
 }

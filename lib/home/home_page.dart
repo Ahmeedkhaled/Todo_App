@@ -32,12 +32,11 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar:
       BottomAppBar(
-        shape:CircularNotchedRectangle() ,
+        shape:CircularNotchedRectangle(),
         notchMargin: 10,
         child: BottomNavigationBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-
           currentIndex: selectedIndex,
           onTap: (index) {
             selectedIndex = index;
@@ -63,6 +62,7 @@ class _HomePageState extends State<HomePage> {
       body: tabs[selectedIndex],
     );
   }
+
 
   List<Widget>tabs=[ListTab(),SettingsTab()];
 }

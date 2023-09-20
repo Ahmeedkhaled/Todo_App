@@ -12,27 +12,35 @@ class MyTheme{
     primaryColor:primaryColor,
       appBarTheme: AppBarTheme(
           backgroundColor: primaryColor
+
       ),
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 20,
-          color: whiteColor,
+          color: blackColor,
           fontWeight: FontWeight.w700,
         ),
         titleMedium: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w700,
-          color: blackColor,
+          color: whiteColor,
         ),
         titleSmall: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: primaryColor,
         ),
+        bodySmall: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: blackColor,
+        ),
       ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: primaryColor,
       showUnselectedLabels: false,
+      unselectedItemColor: blackColor,
+      backgroundColor: blackColorDark,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
@@ -42,21 +50,44 @@ class MyTheme{
             ),
             borderRadius: BorderRadius.circular(100))
     ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: whiteColor
+    ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: whiteColor,
 
 
-  );
+  ));
   static ThemeData darkMode=ThemeData(
-    scaffoldBackgroundColor: blackColorDark,
+
+      textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontSize: 20,
+          color: blackColor,
+          fontWeight: FontWeight.w700,
+        ),
+        titleMedium: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+          color: whiteColor,
+        ),
+        titleSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: primaryColor,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: blackColor,
+        ),
+      ),
+
+      scaffoldBackgroundColor: blackColorDark,
     appBarTheme: AppBarTheme(
         backgroundColor: primaryColor
     ),
     primaryColor:primaryColor,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: primaryColor,
-      showUnselectedLabels: false,
-      unselectedItemColor: whiteColor,
-      backgroundColor: blackColorDark,
-    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
       iconSize: 30,
@@ -66,6 +97,20 @@ class MyTheme{
             ),
             borderRadius: BorderRadius.circular(100))
     ),
+    bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: whiteColor
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedItemColor: primaryColor,
+      showUnselectedLabels: false,
+      unselectedItemColor: whiteColor,
+      backgroundColor: blackColorDark,
+    ),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: blackColorDark,
+    )
+
+
 
   );
 
