@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/home/List/add_bottom_sheet.dart';
 import 'package:todo_app/home/List/list_tab.dart';
 import 'package:todo_app/home/settings/settings_tab.dart';
 import 'package:todo_app/my_theme.dart';
@@ -27,7 +28,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           "To Do List",
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: MyTheme.whiteColor
+          ),
         ),
       ),
       bottomNavigationBar:
@@ -55,7 +58,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showAddBottomSheet();
+          },
           child: Icon(Icons.add),
          ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -65,4 +70,8 @@ class _HomePageState extends State<HomePage> {
 
 
   List<Widget>tabs=[ListTab(),SettingsTab()];
+
+  void showAddBottomSheet() {
+    showModalBottomSheet(context: context, builder: (context)=>AddBottomSheet());
+  }
 }

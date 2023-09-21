@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 
 class MyTheme{
   static Color primaryColor=Color(0xff5D9CEC);
+  static Color backgroundColor=Color(0xffDFECDB);
   static Color whiteColor=Color(0xffFFFFFF);
   static Color greenColor=Color(0xff61E757);
   static Color redColor=Color(0xffEC4B4B);
   static Color blackColor=Color(0xff303030);
   static Color blackColorDark=Color(0xff141922);
+  static Color grayColor=Color(0xffA9A9A99C);
   static ThemeData lightMode=ThemeData(
-    scaffoldBackgroundColor: whiteColor,
+    scaffoldBackgroundColor: backgroundColor,
     primaryColor:primaryColor,
       appBarTheme: AppBarTheme(
-          backgroundColor: primaryColor
+          backgroundColor: primaryColor,
+        elevation: 0
 
       ),
       textTheme: TextTheme(
@@ -33,6 +36,26 @@ class MyTheme{
         bodySmall: TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.w700,
+          color: blackColor,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: blackColor,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: grayColor,
+        ),
+        headlineLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: grayColor,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
           color: blackColor,
         ),
       ),
@@ -63,7 +86,7 @@ class MyTheme{
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 20,
-          color: blackColor,
+          color: whiteColor,
           fontWeight: FontWeight.w700,
         ),
         titleMedium: TextStyle(
@@ -80,12 +103,35 @@ class MyTheme{
           fontSize: 22,
           fontWeight: FontWeight.w700,
           color: blackColor,
+
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: whiteColor,
+      ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: grayColor,
+        ),
+        headlineLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: whiteColor,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: whiteColor,
         ),
       ),
 
       scaffoldBackgroundColor: blackColorDark,
     appBarTheme: AppBarTheme(
-        backgroundColor: primaryColor
+        backgroundColor: primaryColor,
+        elevation: 0
+
     ),
     primaryColor:primaryColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -98,7 +144,7 @@ class MyTheme{
             borderRadius: BorderRadius.circular(100))
     ),
     bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: whiteColor
+        backgroundColor: blackColorDark
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: primaryColor,

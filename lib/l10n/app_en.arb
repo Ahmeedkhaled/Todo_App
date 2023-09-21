@@ -6,5 +6,10 @@
   "english": "English",
   "arabic": "Arabic",
   "language": "Language",
-  "theme": "Theme"
+  "theme": "Theme",
+  "add_new_task": "Add New Task",
+  "enter_your_task": "enter Your Task",
+  "enter_your_task_details": "enter Your Task details",
+  "select_date": "Select Date",
+  "add": "Add"
 }

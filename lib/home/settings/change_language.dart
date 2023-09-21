@@ -65,7 +65,7 @@ class _ScreenChangeLanguageState extends State<ScreenChangeLanguage> {
             vertical:  MediaQuery.of(context).size.height*0.02
         ),
         child: Text(text,style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            fontSize: 15
+            fontSize: 15,
         ),));
   }
 }

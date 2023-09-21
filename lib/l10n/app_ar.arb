@@ -6,5 +6,12 @@
   "english": "الانجليزيه",
   "arabic": "العربيه",
   "language": "اللغه",
-  "theme": "النمط"
+  "theme": "النمط",
+  "add_new_task": "إضافة مهمة جديدة",
+  "enter_your_task": "ادخل مهمتك",
+  "enter_your_task_details": "ادخل تفاصيل مهمتك ",
+  "select_date": "حدد التاريخ",
+  "add": "اضف"
+
+
 }
