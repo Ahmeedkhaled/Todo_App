@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AppConfigProvider extends ChangeNotifier{
-  String appLanguage="en";
-  ThemeMode appTheme=ThemeMode.light;
-
-  void changeLanguage(String newLanguage){
-    if(appLanguage==newLanguage){
+class AppConfigProvider extends ChangeNotifier {
+  String appLanguage = "en";
+  ThemeMode appTheme = ThemeMode.light;
+  void changeLanguage(String newLanguage) async {
+    if (appLanguage == newLanguage) {
       return;
     }
-    appLanguage=newLanguage;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    appLanguage = newLanguage;
+    sharedPreferences.setString("language", appLanguage);
     notifyListeners();
   }
-  void changeTheme(ThemeMode newTheme){
-    if(appTheme==newTheme){
+
+  void changeTheme(ThemeMode newTheme) {
+    if (appTheme == newTheme) {
       return;
     }
-    appTheme=newTheme;
+    appTheme = newTheme;
     notifyListeners();
   }
-  bool isDarkMode(){
-  return  appTheme==MyTheme.darkMode;
+
+  bool isDarkMode() {
+    return appTheme == MyTheme.darkMode;
   }
 }

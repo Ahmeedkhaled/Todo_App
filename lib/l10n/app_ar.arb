@@ -11,7 +11,9 @@
   "enter_your_task": "ادخل مهمتك",
   "enter_your_task_details": "ادخل تفاصيل مهمتك ",
   "select_date": "حدد التاريخ",
-  "add": "اضف"
+  "add": "اضف",
+  "delete": "حذف"
+
 
 
 }

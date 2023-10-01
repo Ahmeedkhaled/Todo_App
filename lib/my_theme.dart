@@ -9,6 +9,7 @@ class MyTheme{
   static Color blackColor=Color(0xff303030);
   static Color blackColorDark=Color(0xff141922);
   static Color grayColor=Color(0xffA9A9A99C);
+  static Color scaffoldBackground=Color(0xff060E1E);
   static ThemeData lightMode=ThemeData(
     scaffoldBackgroundColor: backgroundColor,
     primaryColor:primaryColor,
@@ -127,7 +128,7 @@ class MyTheme{
         ),
       ),
 
-      scaffoldBackgroundColor: blackColorDark,
+      scaffoldBackgroundColor: scaffoldBackground,
     appBarTheme: AppBarTheme(
         backgroundColor: primaryColor,
         elevation: 0

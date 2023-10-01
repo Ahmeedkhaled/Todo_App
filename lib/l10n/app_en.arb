@@ -11,5 +11,6 @@
   "enter_your_task": "enter Your Task",
   "enter_your_task_details": "enter Your Task details",
   "select_date": "Select Date",
-  "add": "Add"
+  "add": "Add",
+  "delete": "Delete"
 }
