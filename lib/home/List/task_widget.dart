@@ -9,13 +9,12 @@ import 'package:todo_app/home/settings/settings_tab.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-class TaskWidgetItem extends StatefulWidget {
+import '../../model/tasks.dart';
+class TaskWidgetItem extends StatelessWidget {
 
-  @override
-  State<TaskWidgetItem> createState() => _TaskWidgetItemState();
-}
+  Tasks tasks;
+  TaskWidgetItem({required this.tasks});
 
-class _TaskWidgetItemState extends State<TaskWidgetItem> {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<AppConfigProvider>(context);
@@ -59,11 +58,11 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
                children: [
                  Padding(
                    padding: const EdgeInsets.all(8.0),
-                   child: Text("Task title",style:Theme.of(context).textTheme.titleSmall,),
+                   child: Text(tasks?.title?? "",style:Theme.of(context).textTheme.titleSmall,),
                  ),
                  Padding(
                    padding: const EdgeInsets.all(2.0),
-                   child: Text("des"),
+                   child: Text(tasks?.description?? ""),
                  )
                ],
              ),

@@ -1,25 +1,35 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/home/List/add_bottom_sheet.dart';
 import 'package:todo_app/home/List/list_tab.dart';
 import 'package:todo_app/home/List/task_widget.dart';
 import 'package:todo_app/home/settings/settings_tab.dart';
+import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-class ListTab extends StatelessWidget {
+class ListTab extends StatefulWidget {
+  @override
+  State<ListTab> createState() => _ListTabState();
+}
 
+class _ListTabState extends State<ListTab> {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<AppConfigProvider>(context);
+    provider.getAllTasksFromFireStore();
     return Column(
       children: [
         CalendarTimeline(
-          initialDate: DateTime.now(),
+          initialDate: provider.selectDate,
           firstDate: DateTime.now(),
           lastDate: DateTime.now().add(Duration(days: 365)),
-          onDateSelected: (date) => print(date),
+          onDateSelected: (date) {
+            provider.changeDate(date);
+          },
           leftMargin: 20,
           monthColor: Colors.blueGrey,
           dayColor: Colors.teal[200],
@@ -30,13 +40,14 @@ class ListTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 10,
-              itemBuilder: (_,__){
-               return TaskWidgetItem();
+            itemCount: provider.tasksList.length,
+              itemBuilder: (context,index){
+               return TaskWidgetItem(tasks:provider.tasksList[index] ,);
               }
           ),
         )
       ],
     );
   }
+
 }
