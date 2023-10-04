@@ -58,7 +58,13 @@ class MyTheme{
           fontSize: 18,
           fontWeight: FontWeight.w400,
           color: blackColor,
-        ),
+        ),headlineSmall: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        color: whiteColor,
+      ),
+
+
       ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: primaryColor,
