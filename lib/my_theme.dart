@@ -137,7 +137,10 @@ class MyTheme{
       scaffoldBackgroundColor: scaffoldBackground,
     appBarTheme: AppBarTheme(
         backgroundColor: primaryColor,
-        elevation: 0
+        elevation: 0,
+      titleTextStyle: TextStyle(
+        color: blackColorDark
+      )
 
     ),
     primaryColor:primaryColor,

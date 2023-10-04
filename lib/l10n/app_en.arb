@@ -20,6 +20,10 @@
   "password": "Password",
   "forget_password": "ForgetPassword",
   "or_create_my_account": "Or Create My Account",
-  "welcome_back": "Welcome Back"
+  "welcome_back": "Welcome Back",
+  "edit_task": "Edit Task",
+  "this_is_title": "This is title",
+  "task_details": "Task Details",
+  "save_changes": "Save Changes"
 
 }

@@ -20,7 +20,11 @@
   "password": "كلمة المرور",
   "forget_password": "نسيت كلمة المرور",
   "or_create_my_account": "أو إنشاء حسابي",
-  "welcome_back": "مرحبًا بعودتك"
+  "welcome_back": "مرحبًا بعودتك",
+  "edit_task": "تعديل المهمه",
+  "this_is_title": "هذا هو العنوان",
+  "task_details": "تفاصيل المهمة",
+  "save_changes": "حفظ التغييرات"
 
 
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/auth/login/login.dart';
 import 'package:todo_app/auth/register/register.dart';
+import 'package:todo_app/home/List/change_content.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'home/home_page.dart';
 import 'my_theme.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget{
         HomePage.routeName:(context)=>HomePage(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
         LoginScreen.routeName:(context)=>LoginScreen(),
+        ChangeContent.routeName:(context)=>ChangeContent(),
       } ,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

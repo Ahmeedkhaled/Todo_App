@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_app/home/List/add_bottom_sheet.dart';
 import 'package:todo_app/home/List/list_tab.dart';
 import 'package:todo_app/home/settings/settings_tab.dart';
 import 'package:todo_app/my_theme.dart';
-import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<AppConfigProvider>(context);
+    // var provider = Provider.of<AppConfigProvider>(context);
 
     return Scaffold(
 

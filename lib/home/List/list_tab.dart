@@ -1,16 +1,9 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/firebase_utils.dart';
-import 'package:todo_app/home/List/add_bottom_sheet.dart';
-import 'package:todo_app/home/List/list_tab.dart';
 import 'package:todo_app/home/List/task_widget.dart';
-import 'package:todo_app/home/settings/settings_tab.dart';
-import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ListTab extends StatefulWidget {
   @override
   State<ListTab> createState() => _ListTabState();
