@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo_app/model/tasks.dart';
 
 class FirebaseUtils {
+
   static CollectionReference<Tasks> getTasksCollection(){
    return FirebaseFirestore.instance.collection(Tasks.collectionName)
        .withConverter<Tasks>(
@@ -14,5 +15,16 @@ class FirebaseUtils {
   var docRef= collection.doc();
   tasks.id=docRef.id;
   return docRef.set(tasks);
+  }
+  static Future<void> updateTask(Tasks tasks) async {
+    var updateTasks= getTasksCollection();
+  await updateTasks.doc().update(
+    {
+      "title":tasks.title,
+      "description":tasks.description,
+      "dateTime":tasks.dateTime
+    }
+  );
+
   }
 }

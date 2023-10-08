@@ -24,6 +24,7 @@
   "edit_task": "Edit Task",
   "this_is_title": "This is title",
   "task_details": "Task Details",
-  "save_changes": "Save Changes"
+  "save_changes": "Save Changes",
+  "done": "Done!"
 
 }

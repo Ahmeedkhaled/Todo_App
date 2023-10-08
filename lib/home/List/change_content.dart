@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import '../../my_theme.dart';
@@ -7,21 +8,24 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ChangeContent extends StatefulWidget {
 static const String routeName="change_content";
 
+
+
   @override
   State<ChangeContent> createState() => _ChangeContentState();
 }
 
 class _ChangeContentState extends State<ChangeContent> {
 var formKey=GlobalKey<FormState>();
-String title="";
-String description="";
-DateTime selectedDate=DateTime.now();
+late AppConfigProvider provider;
+String? title;
+String? description;
+DateTime? selectedDate;
 
 
   @override
   Widget build(BuildContext context) {
-    var args=ModalRoute.of(context)!.settings.arguments as ContentArgs;
-    var provider=Provider.of<AppConfigProvider>(context);
+     provider=Provider.of<AppConfigProvider>(context);
+     var args=ModalRoute.of(context)!.settings.arguments as ChangeContentArgs;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -58,6 +62,10 @@ DateTime selectedDate=DateTime.now();
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
                           initialValue: args.tasks.title,
+
+                          onChanged: (text){
+                           args.tasks.title=text;
+                          },
                           validator: (value) {
                             if (value!.isEmpty || value == null) {
                               return "please enter your title";
@@ -79,6 +87,9 @@ DateTime selectedDate=DateTime.now();
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
                           initialValue: args.tasks.description,
+                          onChanged: (text){
+                            args.tasks.description=text;
+                          },
                           validator: (value) {
                             if (value!.isEmpty || value == null) {
                               return "please enter your details";
@@ -108,7 +119,6 @@ DateTime selectedDate=DateTime.now();
                       InkWell(
                         onTap: () {
                           showCalendar();
-                          args.tasks.dateTime=selectedDate;
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10),
@@ -127,7 +137,7 @@ DateTime selectedDate=DateTime.now();
                         child: ElevatedButton(
 
                             onPressed: () {
-
+                              changeDataTask();
                             },
                             child: Text(
                               AppLocalizations.of(context)!.save_changes,
@@ -167,8 +177,26 @@ void showCalendar() async {
     selectedDate = chossenDate;
     setState(() {});
   }
-}}
-class ContentArgs{
-  Tasks tasks;
-  ContentArgs({required this.tasks});
 }
+
+  void changeDataTask() {
+    Tasks tasks=Tasks(
+        title: title,
+        dateTime: selectedDate,
+        description: description);
+    FirebaseUtils.updateTask(tasks).timeout(
+      Duration(milliseconds: 500),
+      onTimeout: (){
+        print("change task");
+        provider.getAllTasksFromFireStore();
+        Navigator.of(context).pop();
+      }
+    );
+  }
+
+}
+class ChangeContentArgs{
+  Tasks tasks;
+  ChangeContentArgs({required this.tasks});
+}
+

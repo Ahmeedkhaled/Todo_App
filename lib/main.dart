@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget{
     var provider=Provider.of<AppConfigProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:HomePage.routeName ,
+      initialRoute:RegisterScreen.routeName ,
       routes:{
         HomePage.routeName:(context)=>HomePage(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),

@@ -1,18 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/auth/login/login.dart';
 import 'package:todo_app/component/custom_text_field.dart';
+import 'package:todo_app/dialog_utils.dart';
+import 'package:todo_app/home/home_page.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   static const String routeName = "register";
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   var nameController = TextEditingController();
+
   var emailController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   var confirmPasswordController = TextEditingController();
+
   var formState = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppConfigProvider>(context);
@@ -131,9 +145,33 @@ class RegisterScreen extends StatelessWidget {
     ));
   }
 
-  void register() {
+  void register()async {
     if(formState.currentState!.validate()==true){
-
+      DialogUtils.showLoading(context, "Loading");
+      try {
+        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+        );
+        DialogUtils.hideLoading(context);
+        DialogUtils.showMessage(context, "Register Successfully",posActionName: "ok");
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(context, 'The password provided is too weak.',title: "Error",posActionName: "ok",posAction: (){
+            Navigator.pushNamed(context, HomePage.routeName);
+          });
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(context, 'The account already exists for that email.',title: "Error",posActionName: "ok");
+        }
+      } catch (e) {
+        DialogUtils.hideLoading(context);
+        DialogUtils.showMessage(context,e.toString(),title: "Error",posActionName: "ok");
+        print(e);
+      }
     }
   }
 }
