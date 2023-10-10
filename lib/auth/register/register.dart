@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/auth/login/login.dart';
 import 'package:todo_app/component/custom_text_field.dart';
 import 'package:todo_app/dialog_utils.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/home/home_page.dart';
+import 'package:todo_app/model/my_user.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String routeName = "register";
@@ -153,14 +156,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: emailController.text,
         password: passwordController.text,
         );
+        MyUser myUser=MyUser(
+            id: credential.user?.uid??"",
+            name: nameController.text,
+            email: emailController.text);
+        var authProvider=Provider.of<AuthProvider>(context,listen: false);
+        authProvider.updateUser(myUser);
+        FirebaseUtils.addUserToFireStore(myUser);
         DialogUtils.hideLoading(context);
-        DialogUtils.showMessage(context, "Register Successfully",posActionName: "ok");
+        DialogUtils.showMessage(context, "Register Successfully",posActionName: "ok",
+            posAction: (){
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(context, 'The password provided is too weak.',title: "Error",posActionName: "ok",posAction: (){
-            Navigator.pushNamed(context, HomePage.routeName);
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
           });
         } else if (e.code == 'email-already-in-use') {
           print('The account already exists for that email.');

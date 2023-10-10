@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/auth/register/register.dart';
 import 'package:todo_app/component/custom_text_field.dart';
 import 'package:todo_app/dialog_utils.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/home/home_page.dart';
+import 'package:todo_app/model/my_user.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "login";
@@ -147,13 +150,19 @@ class _LoginScreenState extends State<LoginScreen> {
             email: emailController.text,
             password: passwordController.text,
         );
+       var user=await FirebaseUtils.readUserFromFireStore(credential.user?.uid??"");
+       if(user==null){
+         return;
+       }
+        var authProvider=Provider.of<AuthProvider>(context,listen: false);
+        authProvider.updateUser(user);
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(
             context,
             "Login Successfully",
             posActionName: "ok",
             posAction: (){
-              Navigator.pushNamed(context, HomePage.routeName);
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
             }
         );
         print(credential.user?.uid);

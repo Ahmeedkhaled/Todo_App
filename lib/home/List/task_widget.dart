@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo_app/dialog_utils.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 import '../../model/tasks.dart';
 import 'change_content.dart';
 class TaskWidgetItem extends StatefulWidget {
@@ -28,7 +31,21 @@ class _TaskWidgetItemState extends State<TaskWidgetItem> {
     SlidableAction(
       borderRadius: BorderRadius.only(topLeft:Radius.circular(15) ,bottomLeft:Radius.circular(15) ),
     onPressed: (context){
+        var authProvider=Provider.of<AuthProvider>(context,listen: false);
       //delete container
+      FirebaseUtils.deleteTaskFromFireStore(widget.tasks, authProvider.currentUser?.id??"").then((value) {
+        DialogUtils.hideLoading(context);
+        DialogUtils.showMessage(context, "Task added Successfully",posActionName: "ok",posAction: (){
+          Navigator.pop(context);
+        });
+      }).timeout(
+        Duration(milliseconds: 500),
+        onTimeout: (){
+          provider.getAllTasksFromFireStore(authProvider.currentUser?.id??"");
+          Navigator.pop(context);
+
+        }
+      );
     },
     backgroundColor: MyTheme.redColor,
     foregroundColor: Colors.white,

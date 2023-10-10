@@ -10,11 +10,17 @@ class AppConfigProvider extends ChangeNotifier {
   ThemeMode appTheme = ThemeMode.light;
   List<Tasks> tasksList=[];
   DateTime selectDate=DateTime.now();
+  Tasks? currentTask;
+
+  void updateUser(Tasks newTask){
+    currentTask=newTask;
+    notifyListeners();
+  }
 
 
 
-  void getAllTasksFromFireStore()async{
-    QuerySnapshot<Tasks> querySnapshot= await FirebaseUtils.getTasksCollection().get();
+  void getAllTasksFromFireStore(String uId)async{
+    QuerySnapshot<Tasks> querySnapshot= await FirebaseUtils.getTasksCollection(uId).get();
     tasksList= querySnapshot.docs.map((doc){
       return doc.data();
     }).toList();
@@ -36,9 +42,9 @@ class AppConfigProvider extends ChangeNotifier {
   );
     notifyListeners();
   }
-  void changeDate(DateTime date){
+  void changeDate(DateTime date,String uId){
     selectDate=date;
-    getAllTasksFromFireStore();
+    getAllTasksFromFireStore(uId);
     notifyListeners();
 
   }
@@ -47,17 +53,19 @@ class AppConfigProvider extends ChangeNotifier {
       return;
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
     appLanguage = newLanguage;
     sharedPreferences.setString("language", appLanguage);
     notifyListeners();
   }
 
-  void changeTheme(ThemeMode newTheme) {
+  void changeTheme(ThemeMode newTheme) async{
     if (appTheme == newTheme) {
       return;
     }
+    
     appTheme = newTheme;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("isDark", appTheme==ThemeMode.dark?"dark":"light");
     notifyListeners();
   }
 

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/home/List/task_widget.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 class ListTab extends StatefulWidget {
   @override
   State<ListTab> createState() => _ListTabState();
@@ -13,7 +14,8 @@ class _ListTabState extends State<ListTab> {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<AppConfigProvider>(context);
-    provider.getAllTasksFromFireStore();
+    var authProvider=Provider.of<AuthProvider>(context);
+    provider.getAllTasksFromFireStore(authProvider.currentUser?.id??"");
     return Column(
       children: [
         CalendarTimeline(
@@ -21,7 +23,7 @@ class _ListTabState extends State<ListTab> {
           firstDate: DateTime.now(),
           lastDate: DateTime.now().add(Duration(days: 365)),
           onDateSelected: (date) {
-            provider.changeDate(date);
+            provider.changeDate(date,authProvider.currentUser?.id??"");
           },
           leftMargin: 20,
           monthColor: Colors.blueGrey,

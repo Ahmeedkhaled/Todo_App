@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/dialog_utils.dart';
 import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/model/my_user.dart';
 import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 class AddBottomSheet extends StatefulWidget {
   @override
   State<AddBottomSheet> createState() => _AddBottomSheetState();
@@ -138,10 +141,16 @@ class _AddBottomSheetState extends State<AddBottomSheet> {
               dateTime: selectedDate,
               description: description
           );
-      FirebaseUtils.addTaskToFirebase(tasks).timeout(
+      var authProvider=Provider.of<AuthProvider>(context,listen: false);
+      DialogUtils.showLoading(context, "Waiting...");
+      FirebaseUtils.addTaskToFirebase(tasks,authProvider.currentUser?.id??"").then((value) {
+        DialogUtils.hideLoading(context);
+        DialogUtils.showMessage(context, "Task added Successfully");
+      })
+          .timeout(
         Duration(milliseconds: 500),
         onTimeout: (){
-          provider.getAllTasksFromFireStore();
+          provider.getAllTasksFromFireStore(authProvider.currentUser?.id??"");
           Navigator.of(context).pop();
         }
       );

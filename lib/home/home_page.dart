@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/auth/login/login.dart';
 import 'package:todo_app/home/List/add_bottom_sheet.dart';
 import 'package:todo_app/home/List/list_tab.dart';
 import 'package:todo_app/home/settings/settings_tab.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "Home";
@@ -19,17 +22,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // var provider = Provider.of<AppConfigProvider>(context);
+    var authProvider=Provider.of<AuthProvider>(context,listen: false);
+
 
     return Scaffold(
 
 
       appBar: AppBar(
-        title: Text(
-          "To Do List",
+        title: Text(selectedIndex==0?
+            "To Do List ${authProvider.currentUser!.name}":
+          AppLocalizations.of(context)!.settings
+          ,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
             color: MyTheme.whiteColor
           ),
         ),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+          }, icon: Icon(Icons.exit_to_app))
+        ],
       ),
       bottomNavigationBar:
       BottomAppBar(

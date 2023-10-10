@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/dialog_utils.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/model/tasks.dart';
 import 'package:todo_app/provider/app_config_provider.dart';
+import 'package:todo_app/provider/auth_provider.dart';
 import '../../my_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ChangeContent extends StatefulWidget {
@@ -20,6 +22,8 @@ late AppConfigProvider provider;
 String? title;
 String? description;
 DateTime? selectedDate;
+String? id;
+
 
 
   @override
@@ -61,11 +65,10 @@ DateTime? selectedDate;
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
-                          initialValue: args.tasks.title,
-
                           onChanged: (text){
-                           args.tasks.title=text;
+                            title=text;
                           },
+                          initialValue: args.tasks.title,
                           validator: (value) {
                             if (value!.isEmpty || value == null) {
                               return "please enter your title";
@@ -86,10 +89,10 @@ DateTime? selectedDate;
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
-                          initialValue: args.tasks.description,
                           onChanged: (text){
-                            args.tasks.description=text;
+                            description=text;
                           },
+                          initialValue: args.tasks.description,
                           validator: (value) {
                             if (value!.isEmpty || value == null) {
                               return "please enter your details";
@@ -135,7 +138,6 @@ DateTime? selectedDate;
                           horizontal: MediaQuery.of(context).size.width*0.03
                         ),
                         child: ElevatedButton(
-
                             onPressed: () {
                               changeDataTask();
                             },
@@ -183,12 +185,20 @@ void showCalendar() async {
     Tasks tasks=Tasks(
         title: title,
         dateTime: selectedDate,
-        description: description);
-    FirebaseUtils.updateTask(tasks).timeout(
+        description: description,
+        id: id,
+    );
+    var provider=Provider.of<AppConfigProvider>(context,listen: false);
+    DialogUtils.showLoading(context, "Waiting...");
+    FirebaseUtils.updateTask(tasks,provider.currentTask?.id??"").then((value) {
+      DialogUtils.hideLoading(context);
+      DialogUtils.showMessage(context, "Task added Successfully");
+    })
+        .timeout(
       Duration(milliseconds: 500),
       onTimeout: (){
         print("change task");
-        provider.getAllTasksFromFireStore();
+        provider.getAllTasksFromFireStore(provider.currentTask?.id??"");
         Navigator.of(context).pop();
       }
     );
